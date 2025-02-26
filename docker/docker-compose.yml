@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17.4
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: todo_db
+  todo:
+    image: todo:latest
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/todo_db
+    ports:
+      - "8000:8080"
+    depends_on:
+      - postgres
