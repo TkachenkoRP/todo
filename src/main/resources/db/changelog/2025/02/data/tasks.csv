@@ -1,0 +1,2 @@
+id,title,description,status,priority,author_id,performer_id,create_at,updated_at
+1,Первая задача,Описание первой задачи.,WAITING,HIGH,1,2,2025-02-27,2025-02-27

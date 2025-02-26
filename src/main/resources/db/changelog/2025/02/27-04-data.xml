@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="27-04-data-dev" author="Rodion Tkachenko">
+        <loadData tableName="user" file="data/users.csv" relativeToChangelogFile="true" commentLineStartsWith="#"
+                  encoding="UTF-8" quotchar="'"
+                  separator=",">
+            <column header="id" type="bigint"/>
+            <column name="name" type="varchar(255)"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="password" type="varchar(255)"/>
+        </loadData>
+
+        <loadData tableName="task" file="data/tasks.csv" relativeToChangelogFile="true" commentLineStartsWith="#"
+                  encoding="UTF-8" quotchar="'"
+                  separator=",">
+            <column name="id" type="bigint"/>
+            <column name="title" type="varchar(255)"/>
+            <column name="description" type="text"/>
+            <column name="status" type="varchar(255)"/>
+            <column name="priority" type="varchar(255)"/>
+            <column name="author_id" type="bigint"/>
+            <column name="performer_id" type="bigint"/>
+            <column name="create_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+        </loadData>
+
+        <loadData tableName="comment" file="data/comments.csv" relativeToChangelogFile="true" commentLineStartsWith="#"
+                  encoding="UTF-8" quotchar="'"
+                  separator=",">
+            <column name="id" type="bigint"/>
+            <column name="text" type="text"/>
+            <column name="task_id" type="bigint"/>
+            <column name="author_id" type="bigint"/>
+            <column name="create_at" type="timestamp"/>
+            <column name="updated_at" type="timestamp"/>
+        </loadData>
+
+    </changeSet>
+
+</databaseChangeLog>
