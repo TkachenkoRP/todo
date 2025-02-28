@@ -14,4 +14,16 @@ public interface TaskService {
     Task update(Task task);
 
     void deleteById(Long id);
+
+    Task setTaskWaitStatus(Long id);
+
+    Task setTaskInProgressStatus(Long id);
+
+    Task setTaskDoneStatus(Long id);
+
+    Task setTaskLowPriority(Long id);
+
+    Task setTaskMediumPriority(Long id);
+
+    Task setTaskHighPriority(Long id);
 }

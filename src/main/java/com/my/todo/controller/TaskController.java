@@ -62,8 +62,56 @@ public class TaskController {
         return fullResponseDto;
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         taskService.deleteById(id);
+    }
+
+    @PatchMapping("/{id}/status/waiting")
+    public TaskFullResponseDto setWaitingStatus(@PathVariable Long id) {
+        Task task = taskService.setTaskWaitStatus(id);
+        TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
+        log.debug("Set task waiting status: {}", fullResponseDto);
+        return fullResponseDto;
+    }
+
+    @PatchMapping("/{id}/status/in-progress")
+    public TaskFullResponseDto setInProgressStatus(@PathVariable Long id) {
+        Task task = taskService.setTaskInProgressStatus(id);
+        TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
+        log.debug("Set task in-progress status: {}", fullResponseDto);
+        return fullResponseDto;
+    }
+
+    @PatchMapping("/{id}/status/done")
+    public TaskFullResponseDto setDoneStatus(@PathVariable Long id) {
+        Task task = taskService.setTaskDoneStatus(id);
+        TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
+        log.debug("Set task done status: {}", fullResponseDto);
+        return fullResponseDto;
+    }
+
+    @PatchMapping("/{id}/priority/low")
+    public TaskFullResponseDto setLowPriority(@PathVariable Long id) {
+        Task task = taskService.setTaskLowPriority(id);
+        TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
+        log.debug("Set task low priority: {}", fullResponseDto);
+        return fullResponseDto;
+    }
+
+    @PatchMapping("/{id}/priority/medium")
+    public TaskFullResponseDto setMediumPriority(@PathVariable Long id) {
+        Task task = taskService.setTaskMediumPriority(id);
+        TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
+        log.debug("Set task medium priority: {}", fullResponseDto);
+        return fullResponseDto;
+    }
+
+    @PatchMapping("/{id}/priority/high")
+    public TaskFullResponseDto setHighPriority(@PathVariable Long id) {
+        Task task = taskService.setTaskHighPriority(id);
+        TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
+        log.debug("Set task high priority: {}", fullResponseDto);
+        return fullResponseDto;
     }
 }
