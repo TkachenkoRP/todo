@@ -40,6 +40,14 @@
             <column name="updated_at" type="timestamp"/>
         </loadData>
 
+        <sql>
+        <![CDATA[
+            SELECT setval('user_id_seq', (SELECT MAX(id) FROM public.user));
+            SELECT setval('task_id_seq', (SELECT MAX(id) FROM public.task));
+            SELECT setval('comment_id_seq', (SELECT MAX(id) FROM public.comment));
+            ]]>
+    </sql>
+
     </changeSet>
 
 </databaseChangeLog>

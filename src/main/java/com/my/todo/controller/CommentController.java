@@ -1,8 +1,13 @@
 package com.my.todo.controller;
 
+import com.my.todo.dto.CommentFullResponseDto;
+import com.my.todo.dto.CommentRequestDto;
+import com.my.todo.dto.CommentShortResponseDto;
+import com.my.todo.mapper.CommentMapper;
 import com.my.todo.model.Comment;
 import com.my.todo.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,27 +22,43 @@ import java.util.List;
 @RestController
 @RequestMapping("api/comment")
 @RequiredArgsConstructor
+@Slf4j
 public class CommentController {
     private final CommentService commentService;
+    private final CommentMapper commentMapper;
 
     @GetMapping
-    public List<Comment> getAll() {
-        return commentService.findAll();
+    public List<CommentShortResponseDto> getAll() {
+        List<Comment> comments = commentService.findAll();
+        List<CommentShortResponseDto> responseDtoList = comments.stream().map(commentMapper::toShortDto).toList();
+        log.debug("Get all comments: {}", responseDtoList);
+        return responseDtoList;
     }
 
     @GetMapping("/{id}")
-    public Comment getById(@PathVariable Long id) {
-        return commentService.findById(id);
+    public CommentFullResponseDto getById(@PathVariable Long id) {
+        Comment comment = commentService.findById(id);
+        CommentFullResponseDto fullResponseDto = commentMapper.toFullDto(comment);
+        log.debug("Get comment by id: {} - {}", id, fullResponseDto);
+        return fullResponseDto;
     }
 
     @PostMapping
-    public Comment create(@RequestBody Comment request) {
-        return commentService.save(request);
+    public CommentFullResponseDto create(@RequestBody CommentRequestDto request) {
+        Comment entity = commentMapper.toEntity(request);
+        Comment saved = commentService.save(entity);
+        CommentFullResponseDto fullResponseDto = commentMapper.toFullDto(saved);
+        log.debug("Create comment: {}", fullResponseDto);
+        return fullResponseDto;
     }
 
     @PatchMapping("/{id}")
-    public Comment patch(@PathVariable Long id, @RequestBody Comment request) {
-        return commentService.update(id, request);
+    public CommentFullResponseDto patch(@PathVariable Long id, @RequestBody CommentRequestDto request) {
+        Comment entity = commentMapper.toEntity(id, request);
+        Comment updated = commentService.update(entity);
+        CommentFullResponseDto fullResponseDto = commentMapper.toFullDto(updated);
+        log.debug("Patch comment: {}", fullResponseDto);
+        return fullResponseDto;
     }
 
     @DeleteMapping("/{id}")

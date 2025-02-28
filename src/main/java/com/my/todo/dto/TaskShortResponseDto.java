@@ -13,12 +13,10 @@ import java.time.Instant;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskResponseDto {
+public class TaskShortResponseDto {
     private Long id;
     private String title;
-    private String description;
     private TaskStatus status;
     private TaskPriority priority;
     private Instant createAt;
-    private Instant updatedAt;
 }
