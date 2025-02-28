@@ -1,13 +1,17 @@
 package com.my.todo.service.impl;
 
+import com.my.todo.dto.TaskFilter;
 import com.my.todo.exception.EntityNotFoundException;
 import com.my.todo.mapper.TaskMapper;
 import com.my.todo.model.Task;
 import com.my.todo.model.TaskPriority;
 import com.my.todo.model.TaskStatus;
 import com.my.todo.repository.TaskRepository;
+import com.my.todo.repository.specification.TaskSpecification;
 import com.my.todo.service.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +27,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Task> findAll() {
-        return taskRepository.findAll();
+    public Page<Task> findAll(Pageable pageable, TaskFilter filter) {
+        return taskRepository.findAll(TaskSpecification.withFilter(filter), pageable);
     }
 
     @Override

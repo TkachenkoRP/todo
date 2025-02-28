@@ -1,5 +1,6 @@
 package com.my.todo.controller;
 
+import com.my.todo.dto.TaskFilter;
 import com.my.todo.dto.TaskFullResponseDto;
 import com.my.todo.dto.TaskRequestDto;
 import com.my.todo.dto.TaskShortResponseDto;
@@ -9,6 +10,10 @@ import com.my.todo.service.TaskService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -29,11 +34,10 @@ public class TaskController {
     private final TaskMapper taskMapper;
 
     @GetMapping
-    public List<TaskShortResponseDto> getAll() {
-        List<Task> taskList = taskService.findAll();
+    public Page<TaskShortResponseDto> getAll(@PageableDefault Pageable pageable, @Valid TaskFilter filter) {
+        Page<Task> taskList = taskService.findAll(pageable, filter);
         List<TaskShortResponseDto> responseDtoList = taskList.stream().map(taskMapper::toShortDto).toList();
-        log.debug("Get all task: {}", responseDtoList);
-        return responseDtoList;
+        return new PageImpl<>(responseDtoList, pageable, responseDtoList.size());
     }
 
     @GetMapping("/{id}")

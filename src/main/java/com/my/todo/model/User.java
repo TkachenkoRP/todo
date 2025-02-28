@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @ToString
+@FieldNameConstants
 @Entity
 @Table(name = "user", schema="public")
 public class User {

@@ -19,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.FieldNameConstants;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
@@ -33,6 +34,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Builder
 @ToString
+@FieldNameConstants
 @Entity
 @Table(name = "task", schema="public")
 public class Task {
