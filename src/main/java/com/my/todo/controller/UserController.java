@@ -6,6 +6,7 @@ import com.my.todo.dto.UserShortResponseDto;
 import com.my.todo.mapper.UserMapper;
 import com.my.todo.model.User;
 import com.my.todo.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserFullResponseDto create(@RequestBody UserRequest request) {
+    public UserFullResponseDto create(@RequestBody @Valid UserRequest request) {
         User entity = userMapper.toEntity(request);
         User saved = userService.save(entity);
         UserFullResponseDto fullResponseDto = userMapper.toFullDto(saved);
@@ -53,7 +54,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public UserFullResponseDto path(@PathVariable Long id, @RequestBody UserRequest request) {
+    public UserFullResponseDto path(@PathVariable Long id, @RequestBody @Valid UserRequest request) {
         User entity = userMapper.toEntity(id, request);
         User updated = userService.update(entity);
         UserFullResponseDto fullResponseDto = userMapper.toFullDto(updated);

@@ -37,7 +37,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public Task save(Task task) {
-        task.setStatus(TaskStatus.IN_PROGRESS);
+        task.setStatus(TaskStatus.WAITING);
         return taskRepository.save(task);
     }
 

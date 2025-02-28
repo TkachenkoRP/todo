@@ -6,6 +6,7 @@ import com.my.todo.dto.CommentShortResponseDto;
 import com.my.todo.mapper.CommentMapper;
 import com.my.todo.model.Comment;
 import com.my.todo.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +45,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public CommentFullResponseDto create(@RequestBody CommentRequestDto request) {
+    public CommentFullResponseDto create(@RequestBody @Valid CommentRequestDto request) {
         Comment entity = commentMapper.toEntity(request);
         Comment saved = commentService.save(entity);
         CommentFullResponseDto fullResponseDto = commentMapper.toFullDto(saved);
@@ -53,7 +54,7 @@ public class CommentController {
     }
 
     @PatchMapping("/{id}")
-    public CommentFullResponseDto patch(@PathVariable Long id, @RequestBody CommentRequestDto request) {
+    public CommentFullResponseDto patch(@PathVariable Long id, @RequestBody @Valid CommentRequestDto request) {
         Comment entity = commentMapper.toEntity(id, request);
         Comment updated = commentService.update(entity);
         CommentFullResponseDto fullResponseDto = commentMapper.toFullDto(updated);

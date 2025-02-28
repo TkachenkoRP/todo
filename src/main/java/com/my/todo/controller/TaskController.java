@@ -6,6 +6,7 @@ import com.my.todo.dto.TaskShortResponseDto;
 import com.my.todo.mapper.TaskMapper;
 import com.my.todo.model.Task;
 import com.my.todo.service.TaskService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +45,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskFullResponseDto create(@RequestBody TaskRequestDto request) {
+    public TaskFullResponseDto create(@RequestBody @Valid TaskRequestDto request) {
         Task entity = taskMapper.toEntity(request);
         Task saved = taskService.save(entity);
         TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(saved);
@@ -53,7 +54,7 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}")
-    public TaskFullResponseDto patch(@PathVariable Long id, @RequestBody TaskRequestDto request) {
+    public TaskFullResponseDto patch(@PathVariable Long id, @RequestBody @Valid TaskRequestDto request) {
         Task entity = taskMapper.toEntity(id, request);
         Task updated = taskService.update(entity);
         TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(updated);
