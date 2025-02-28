@@ -42,8 +42,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     @Transactional
-    public Comment update(Comment comment) {
-        Comment existedComment = findById(comment.getId());
+    public Comment update(Long id, Comment comment) {
+        Comment existedComment = findById(id);
         commentMapper.updateComment(comment, existedComment);
         return commentRepository.save(existedComment);
     }

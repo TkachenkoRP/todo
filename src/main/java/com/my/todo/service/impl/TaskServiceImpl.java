@@ -36,8 +36,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task update(Task task) {
-        Task existedTask = findById(task.getId());
+    public Task update(Long id, Task task) {
+        Task existedTask = findById(id);
         taskMapper.updateTask(task, existedTask);
         return taskRepository.save(existedTask);
     }

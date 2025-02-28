@@ -36,8 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User update(User user) {
-        User existedUser = findById(user.getId());
+    public User update(Long id, User user) {
+        User existedUser = findById(id);
         userMapper.updateUser(user, existedUser);
         return userRepository.save(existedUser);
     }
