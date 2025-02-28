@@ -103,4 +103,16 @@ public class TaskServiceImpl implements TaskService {
         task.setPriority(priority);
         return taskRepository.save(task);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Task> findByAuthorId(Long id) {
+        return taskRepository.findByAuthor_Id(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Task> findByPerformerId(Long id) {
+        return taskRepository.findByPerformer_Id(id);
+    }
 }

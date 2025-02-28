@@ -114,4 +114,20 @@ public class TaskController {
         log.debug("Set task high priority: {}", fullResponseDto);
         return fullResponseDto;
     }
+
+    @GetMapping("/author/{id}")
+    public List<TaskShortResponseDto> find(@PathVariable Long id) {
+        List<Task> byAuthorId = taskService.findByAuthorId(id);
+        List<TaskShortResponseDto> responseDtoList = byAuthorId.stream().map(taskMapper::toShortDto).toList();
+        log.debug("Get tasks by author id: {} - {}", id, responseDtoList);
+        return responseDtoList;
+    }
+
+    @GetMapping("/performer/{id}")
+    public List<TaskShortResponseDto> find1(@PathVariable Long id) {
+        List<Task> byPerformerId = taskService.findByPerformerId(id);
+        List<TaskShortResponseDto> responseDtoList = byPerformerId.stream().map(taskMapper::toShortDto).toList();
+        log.debug("Get tasks by performer id: {} - {}", id, responseDtoList);
+        return responseDtoList;
+    }
 }

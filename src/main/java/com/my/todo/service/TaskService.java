@@ -26,4 +26,8 @@ public interface TaskService {
     Task setTaskMediumPriority(Long id);
 
     Task setTaskHighPriority(Long id);
+
+    List<Task> findByAuthorId(Long id);
+
+    List<Task> findByPerformerId(Long id);
 }
