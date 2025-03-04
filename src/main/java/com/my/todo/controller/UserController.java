@@ -1,5 +1,6 @@
 package com.my.todo.controller;
 
+import com.my.todo.controller.doc.UserControllerDoc;
 import com.my.todo.dto.UserFullResponseDto;
 import com.my.todo.dto.UserRegistrationRequestDto;
 import com.my.todo.dto.UserShortResponseDto;
@@ -24,7 +25,7 @@ import java.util.List;
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 @Slf4j
-public class UserController {
+public class UserController implements UserControllerDoc {
     private final UserService userService;
     private final UserMapper userMapper;
 
@@ -54,7 +55,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public UserFullResponseDto path(@PathVariable Long id, @RequestBody @Valid UserRegistrationRequestDto request) {
+    public UserFullResponseDto patch(@PathVariable Long id, @RequestBody @Valid UserRegistrationRequestDto request) {
         User entity = userMapper.toEntity(id, request);
         User updated = userService.update(entity);
         UserFullResponseDto fullResponseDto = userMapper.toFullDto(updated);

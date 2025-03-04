@@ -1,6 +1,7 @@
 package com.my.todo.controller;
 
 import com.my.todo.annotation.CanWorkWithTask;
+import com.my.todo.controller.doc.TaskControllerDoc;
 import com.my.todo.dto.TaskFilter;
 import com.my.todo.dto.TaskFullResponseDto;
 import com.my.todo.dto.TaskRequestDto;
@@ -30,7 +31,7 @@ import java.util.List;
 @RequestMapping("/api/task")
 @RequiredArgsConstructor
 @Slf4j
-public class TaskController {
+public class TaskController implements TaskControllerDoc {
     private final TaskService taskService;
     private final TaskMapper taskMapper;
 

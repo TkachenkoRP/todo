@@ -1,6 +1,7 @@
 package com.my.todo.controller;
 
 import com.my.todo.annotation.CanWorkWithComment;
+import com.my.todo.controller.doc.CommentControllerDoc;
 import com.my.todo.dto.CommentFullResponseDto;
 import com.my.todo.dto.CommentRequestDto;
 import com.my.todo.dto.CommentShortResponseDto;
@@ -25,7 +26,7 @@ import java.util.List;
 @RequestMapping("/api/comment")
 @RequiredArgsConstructor
 @Slf4j
-public class CommentController {
+public class CommentController implements CommentControllerDoc {
     private final CommentService commentService;
     private final CommentMapper commentMapper;
 

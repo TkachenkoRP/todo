@@ -1,5 +1,6 @@
 package com.my.todo.controller;
 
+import com.my.todo.controller.doc.AuthControllerDoc;
 import com.my.todo.dto.RefreshTokenRequestDto;
 import com.my.todo.dto.RefreshTokenResponseDto;
 import com.my.todo.dto.UserLoginRequestDto;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthControllerDoc {
     private final UserRepository userRepository;
     private final SecurityService securityService;
 
