@@ -2,13 +2,14 @@ package com.my.todo.service.impl;
 
 import com.my.todo.dto.TaskFilter;
 import com.my.todo.exception.EntityNotFoundException;
-import com.my.todo.mapper.TaskMapper;
 import com.my.todo.model.Task;
 import com.my.todo.model.TaskPriority;
 import com.my.todo.model.TaskStatus;
+import com.my.todo.model.User;
 import com.my.todo.repository.TaskRepository;
 import com.my.todo.repository.specification.TaskSpecification;
 import com.my.todo.service.TaskService;
+import com.my.todo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,7 +24,7 @@ import java.util.List;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
-    private final TaskMapper taskMapper;
+    private final UserService userService;
 
     @Override
     @Transactional(readOnly = true)
@@ -42,6 +43,8 @@ public class TaskServiceImpl implements TaskService {
     @Override
     @Transactional
     public Task save(Task task) {
+        User currentUser = userService.getCurrentUser();
+        task.setAuthor(currentUser);
         task.setStatus(TaskStatus.WAITING);
         return taskRepository.save(task);
     }
@@ -50,7 +53,7 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public Task update(Task task) {
         Task existedTask = findById(task.getId());
-        taskMapper.updateTask(task, existedTask);
+        existedTask.patchFrom(task);
         return taskRepository.save(existedTask);
     }
 

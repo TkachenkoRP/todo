@@ -1,5 +1,6 @@
 package com.my.todo.controller;
 
+import com.my.todo.annotation.CanWorkWithComment;
 import com.my.todo.dto.CommentFullResponseDto;
 import com.my.todo.dto.CommentRequestDto;
 import com.my.todo.dto.CommentShortResponseDto;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/comment")
+@RequestMapping("/api/comment")
 @RequiredArgsConstructor
 @Slf4j
 public class CommentController {
@@ -54,6 +55,7 @@ public class CommentController {
     }
 
     @PatchMapping("/{id}")
+    @CanWorkWithComment
     public CommentFullResponseDto patch(@PathVariable Long id, @RequestBody @Valid CommentRequestDto request) {
         Comment entity = commentMapper.toEntity(id, request);
         Comment updated = commentService.update(entity);
@@ -63,6 +65,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
+    @CanWorkWithComment
     public void delete(@PathVariable Long id) {
         commentService.deleteById(id);
     }

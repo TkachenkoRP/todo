@@ -28,7 +28,7 @@ import java.util.Objects;
 @Builder
 @ToString
 @Entity
-@Table(name = "comment", schema="public")
+@Table(name = "comment", schema = "public")
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,5 +61,11 @@ public class Comment {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    public void patchFrom(Comment source) {
+        if (source.getText() != null) {
+            this.setText(source.getText());
+        }
     }
 }

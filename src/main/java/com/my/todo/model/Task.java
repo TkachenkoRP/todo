@@ -36,7 +36,7 @@ import java.util.Objects;
 @ToString
 @FieldNameConstants
 @Entity
-@Table(name = "task", schema="public")
+@Table(name = "task", schema = "public")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,5 +77,23 @@ public class Task {
     @Override
     public final int hashCode() {
         return this instanceof HibernateProxy proxy ? proxy.getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
+    public void patchFrom(Task source) {
+        if (source.getTitle() != null) {
+            this.title = source.getTitle();
+        }
+        if (source.getDescription() != null) {
+            this.description = source.getDescription();
+        }
+        if (source.getStatus() != null) {
+            this.status = source.getStatus();
+        }
+        if (source.getPriority() != null) {
+            this.priority = source.getPriority();
+        }
+        if (source.getPerformer() != null) {
+            this.performer = source.getPerformer();
+        }
     }
 }

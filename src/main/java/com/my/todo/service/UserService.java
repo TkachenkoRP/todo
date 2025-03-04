@@ -14,4 +14,12 @@ public interface UserService {
     User update(User user);
 
     void deleteById(Long id);
+
+    User findByEmail(String email);
+
+    User getCurrentUser();
+
+    User addAdminRole(Long id);
+
+    User removeAdminRole(Long id);
 }

@@ -1,7 +1,7 @@
 package com.my.todo.controller;
 
 import com.my.todo.dto.UserFullResponseDto;
-import com.my.todo.dto.UserRequest;
+import com.my.todo.dto.UserRegistrationRequestDto;
 import com.my.todo.dto.UserShortResponseDto;
 import com.my.todo.mapper.UserMapper;
 import com.my.todo.model.User;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/user")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserFullResponseDto create(@RequestBody @Valid UserRequest request) {
+    public UserFullResponseDto create(@RequestBody @Valid UserRegistrationRequestDto request) {
         User entity = userMapper.toEntity(request);
         User saved = userService.save(entity);
         UserFullResponseDto fullResponseDto = userMapper.toFullDto(saved);
@@ -54,7 +54,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public UserFullResponseDto path(@PathVariable Long id, @RequestBody @Valid UserRequest request) {
+    public UserFullResponseDto path(@PathVariable Long id, @RequestBody @Valid UserRegistrationRequestDto request) {
         User entity = userMapper.toEntity(id, request);
         User updated = userService.update(entity);
         UserFullResponseDto fullResponseDto = userMapper.toFullDto(updated);
@@ -65,5 +65,21 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         userService.deleteById(id);
+    }
+
+    @PostMapping("role/admin/add/{id}")
+    public UserFullResponseDto addAdminRole(@PathVariable Long id) {
+        User user = userService.addAdminRole(id);
+        UserFullResponseDto fullResponseDto = userMapper.toFullDto(user);
+        log.debug("Add admin role to user: {}", fullResponseDto);
+        return fullResponseDto;
+    }
+
+    @PostMapping("role/admin/remove/{id}")
+    public UserFullResponseDto removeAdminRole(@PathVariable Long id) {
+        User user = userService.removeAdminRole(id);
+        UserFullResponseDto fullResponseDto = userMapper.toFullDto(user);
+        log.debug("Remove admin role to user: {}", fullResponseDto);
+        return fullResponseDto;
     }
 }

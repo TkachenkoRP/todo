@@ -16,3 +16,13 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
     contexts: dev
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+app:
+  jwt:
+    secret: "SecretKey012345678901234567890123SecretKey012345678901234567890123"
+    tokenExpiration: 3m
+    refreshTokenExpiration: 30m

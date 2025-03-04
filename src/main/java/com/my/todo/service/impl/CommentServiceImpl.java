@@ -1,7 +1,6 @@
 package com.my.todo.service.impl;
 
 import com.my.todo.exception.EntityNotFoundException;
-import com.my.todo.mapper.CommentMapper;
 import com.my.todo.model.Comment;
 import com.my.todo.repository.CommentRepository;
 import com.my.todo.service.CommentService;
@@ -17,7 +16,6 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
-    private final CommentMapper commentMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -44,7 +42,7 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     public Comment update(Comment comment) {
         Comment existedComment = findById(comment.getId());
-        commentMapper.updateComment(comment, existedComment);
+        existedComment.patchFrom(comment);
         return commentRepository.save(existedComment);
     }
 

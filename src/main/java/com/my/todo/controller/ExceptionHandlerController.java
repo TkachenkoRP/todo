@@ -2,6 +2,7 @@ package com.my.todo.controller;
 
 import com.my.todo.dto.ErrorResponseDto;
 import com.my.todo.exception.EntityNotFoundException;
+import com.my.todo.exception.RefreshTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -36,5 +37,11 @@ public class ExceptionHandlerController {
         String errorMessage = String.join(";", errorMessages);
 
         return new ErrorResponseDto(errorMessage);
+    }
+
+    @ExceptionHandler(RefreshTokenException.class)
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    public ErrorResponseDto refreshTokenException(RefreshTokenException e) {
+        return new ErrorResponseDto(e.getLocalizedMessage());
     }
 }

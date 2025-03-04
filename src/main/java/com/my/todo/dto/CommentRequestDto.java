@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentRequestDto {
     @NotBlank(message = "Комментарий не содержит текста.")
-    @NotNull(message = "Комментарий не содержит текста.")
     private String text;
     @NotNull(message = "Не указан автор комментария.")
     private Long authorId;

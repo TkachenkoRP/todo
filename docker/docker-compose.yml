@@ -7,6 +7,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: todo_db
+  redis:
+    image: redis:7.0.12
+    ports:
+      - "6379:6379"
   todo:
     image: todo:latest
     build:
@@ -14,7 +18,9 @@ services:
       dockerfile: docker/Dockerfile
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/todo_db
+      SPRING_DATA_REDIS_HOST: redis
     ports:
       - "8000:8080"
     depends_on:
       - postgres
+      - redis

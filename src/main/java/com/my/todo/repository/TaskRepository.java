@@ -11,4 +11,6 @@ public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificat
     List<Task> findByAuthor_Id(Long id);
 
     List<Task> findByPerformer_Id(Long id);
+
+    boolean existsByIdAndAuthor_Id(Long id, Long authorId);
 }

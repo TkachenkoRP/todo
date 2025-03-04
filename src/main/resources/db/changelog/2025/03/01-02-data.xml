@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="27-04-data-dev" author="Rodion Tkachenko">
+        <loadData tableName="user_roles" file="data/user-roles.csv" relativeToChangelogFile="true" commentLineStartsWith="#"
+                  encoding="UTF-8" quotchar="'"
+                  separator=",">
+            <column header="id" type="bigint"/>
+            <column name="user_id" type="bigint"/>
+            <column name="roles" type="varchar(255)"/>
+        </loadData>
+
+        <sql>
+        <![CDATA[
+            SELECT setval('user_roles_id_seq', (SELECT MAX(id) FROM public.user_roles));
+            ]]>
+    </sql>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,5 +1,6 @@
 package com.my.todo.dto;
 
+import com.my.todo.model.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,4 +19,5 @@ public class UserFullResponseDto {
     private List<TaskShortResponseDto> tasksCreated;
     private List<TaskShortResponseDto> tasksAssigned;
     private List<CommentShortResponseDto> comments;
+    private List<RoleType> roles;
 }

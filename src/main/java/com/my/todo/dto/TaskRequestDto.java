@@ -15,16 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TaskRequestDto {
     @NotBlank(message = "Укажите заголовок задачи.")
-    @NotNull(message = "Укажите заголовок задачи.")
     private String title;
     @NotBlank(message = "Укажите описание задачи.")
-    @NotNull(message = "Укажите описание задачи.")
     private String description;
     @NotNull(message = "Укажите приоритет задачи.")
     @ValueOfEnum(enumClass = TaskPriority.class)
     private String priority;
-    @NotNull(message = "Укажите автора.")
-    private Long authorId;
     @NotNull(message = "Укажите исполнителя.")
     private Long performerId;
 }

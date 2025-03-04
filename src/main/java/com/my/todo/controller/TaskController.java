@@ -1,5 +1,6 @@
 package com.my.todo.controller;
 
+import com.my.todo.annotation.CanWorkWithTask;
 import com.my.todo.dto.TaskFilter;
 import com.my.todo.dto.TaskFullResponseDto;
 import com.my.todo.dto.TaskRequestDto;
@@ -58,6 +59,7 @@ public class TaskController {
     }
 
     @PatchMapping("/{id}")
+    @CanWorkWithTask
     public TaskFullResponseDto patch(@PathVariable Long id, @RequestBody @Valid TaskRequestDto request) {
         Task entity = taskMapper.toEntity(id, request);
         Task updated = taskService.update(entity);
@@ -71,7 +73,7 @@ public class TaskController {
         taskService.deleteById(id);
     }
 
-    @PatchMapping("/{id}/status/waiting")
+    @PatchMapping("/status/waiting/{id}")
     public TaskFullResponseDto setWaitingStatus(@PathVariable Long id) {
         Task task = taskService.setTaskWaitStatus(id);
         TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
@@ -79,7 +81,7 @@ public class TaskController {
         return fullResponseDto;
     }
 
-    @PatchMapping("/{id}/status/in-progress")
+    @PatchMapping("/status/in-progress/{id}")
     public TaskFullResponseDto setInProgressStatus(@PathVariable Long id) {
         Task task = taskService.setTaskInProgressStatus(id);
         TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
@@ -87,7 +89,7 @@ public class TaskController {
         return fullResponseDto;
     }
 
-    @PatchMapping("/{id}/status/done")
+    @PatchMapping("/status/done/{id}")
     public TaskFullResponseDto setDoneStatus(@PathVariable Long id) {
         Task task = taskService.setTaskDoneStatus(id);
         TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
@@ -95,7 +97,7 @@ public class TaskController {
         return fullResponseDto;
     }
 
-    @PatchMapping("/{id}/priority/low")
+    @PatchMapping("/priority/low/{id}")
     public TaskFullResponseDto setLowPriority(@PathVariable Long id) {
         Task task = taskService.setTaskLowPriority(id);
         TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
@@ -103,7 +105,7 @@ public class TaskController {
         return fullResponseDto;
     }
 
-    @PatchMapping("/{id}/priority/medium")
+    @PatchMapping("/priority/medium/{id}")
     public TaskFullResponseDto setMediumPriority(@PathVariable Long id) {
         Task task = taskService.setTaskMediumPriority(id);
         TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
@@ -111,7 +113,7 @@ public class TaskController {
         return fullResponseDto;
     }
 
-    @PatchMapping("/{id}/priority/high")
+    @PatchMapping("/priority/high/{id}")
     public TaskFullResponseDto setHighPriority(@PathVariable Long id) {
         Task task = taskService.setTaskHighPriority(id);
         TaskFullResponseDto fullResponseDto = taskMapper.toFullDto(task);
@@ -120,7 +122,7 @@ public class TaskController {
     }
 
     @GetMapping("/author/{id}")
-    public List<TaskShortResponseDto> find(@PathVariable Long id) {
+    public List<TaskShortResponseDto> getByAuthorId(@PathVariable Long id) {
         List<Task> byAuthorId = taskService.findByAuthorId(id);
         List<TaskShortResponseDto> responseDtoList = byAuthorId.stream().map(taskMapper::toShortDto).toList();
         log.debug("Get tasks by author id: {} - {}", id, responseDtoList);
@@ -128,7 +130,7 @@ public class TaskController {
     }
 
     @GetMapping("/performer/{id}")
-    public List<TaskShortResponseDto> find1(@PathVariable Long id) {
+    public List<TaskShortResponseDto> getByPerformerId(@PathVariable Long id) {
         List<Task> byPerformerId = taskService.findByPerformerId(id);
         List<TaskShortResponseDto> responseDtoList = byPerformerId.stream().map(taskMapper::toShortDto).toList();
         log.debug("Get tasks by performer id: {} - {}", id, responseDtoList);
